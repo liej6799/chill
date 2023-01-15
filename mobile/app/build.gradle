@@ -49,6 +49,10 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
 
+    implementation 'com.zsoltsafrany:needle:1.0.0'
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 
 }

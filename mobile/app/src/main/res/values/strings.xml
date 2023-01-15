@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">chillMobile</string>
+    <string name="string_main_title">Welcome</string>
 </resources>
