@@ -1,19 +1,25 @@
 package com.liej6799.chillmobile.ui.main;
 
+import static com.liej6799.chillmobile.util.TaskList.TASK_LIST;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import com.liej6799.chillmobile.R;
+import com.liej6799.chillmobile.model.TaskType;
 import com.liej6799.chillmobile.ui.task.TextTaskActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
     @BindView(R.id.rv_main_audio)
     RecyclerView rv_main_audio;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,21 +52,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
 
         ButterKnife.bind(this);
 
-        List<String> samplelist = new ArrayList<>();
-        samplelist.add("Fill Mask Task");
-        samplelist.add("Summarization Task");
-
         rv_main_nlp.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mainNLPAdapter = new MainAdapter(this, samplelist);
+        mainNLPAdapter =  new MainAdapter(this, TASK_LIST.stream().filter(x -> x.getTaskTypes() == TaskType.NATURAL_LANGUAGE_PROCESSING).collect(Collectors.toList()));
         rv_main_nlp.setAdapter(mainNLPAdapter);
         mainNLPAdapter.setClickListener(this);
 
-        List<String> audioList = new ArrayList<>();
-        audioList.add("Automatic Speech Recognition task");
-        audioList.add("Audio Classification task");
-
         rv_main_audio.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mainAudioAdapter = new MainAdapter(this, audioList);
+        mainAudioAdapter = new MainAdapter(this, TASK_LIST.stream().filter(x -> x.getTaskTypes() == TaskType.AUDIO).collect(Collectors.toList()));
         rv_main_audio.setAdapter(mainAudioAdapter);
         mainAudioAdapter.setClickListener(this);
 

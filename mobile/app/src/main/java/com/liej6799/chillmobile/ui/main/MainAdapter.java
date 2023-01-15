@@ -13,6 +13,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.liej6799.chillmobile.R;
+import com.liej6799.chillmobile.model.TaskType;
+import com.liej6799.chillmobile.model.Tasks;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,13 +22,13 @@ import java.util.Objects;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private final Context mContext;
-    private final List<String> mData;
+    private final List<Tasks> mData;
     private final LayoutInflater mInflater;
     private MainItemClickListener mClickListener;
 
 
     // data is passed into the constructor
-    MainAdapter(Context context, List<String> data) {
+    MainAdapter(Context context, List<Tasks> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.mContext = context;
@@ -41,14 +43,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String item = mData.get(position);
-        holder.name.setText(item);
+        Tasks item = mData.get(position);
+        holder.name.setText(item.getTaskName());
 
         holder.cv_item_main.setCardBackgroundColor(ResourcesCompat.getColor(mContext.getResources(), R.color.gray, null));
         holder.cv_item_main.setClickable(true);
 
-
-        if (Objects.equals(item, "Fill Mask Task"))
+        if (item.isActive())
         {
             holder.cv_item_main.setCardBackgroundColor(ResourcesCompat.getColor(mContext.getResources(), R.color.purple_500, null));
             holder.cv_item_main.setClickable(false);
@@ -84,7 +85,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
     // convenience method for getting data at click position
     String getString(int id) {
-        return mData.get(id);
+        return mData.get(id).getTaskName();
     }
     // parent activity will implement this method to respond to click events
     public interface MainItemClickListener {
