@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.liej6799.chillmobile.R;
+import com.liej6799.chillmobile.ui.task.TextTaskActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,12 +27,16 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.MainItemClickListener {
 
-    private MainAdapter mainAdapter;
+    private MainAdapter mainNLPAdapter;
+    private MainAdapter mainAudioAdapter;
 
     OkHttpClient client = new OkHttpClient();
 
     @BindView(R.id.rv_main_nlp)
     RecyclerView rv_main_nlp;
+
+    @BindView(R.id.rv_main_audio)
+    RecyclerView rv_main_audio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +46,23 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
         ButterKnife.bind(this);
 
         List<String> samplelist = new ArrayList<>();
-        samplelist.add("ad");
-        samplelist.add("12");
+        samplelist.add("Fill Mask Task");
+        samplelist.add("Summarization Task");
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rv_main_nlp.setLayoutManager(linearLayoutManager);
-        mainAdapter = new MainAdapter(this, samplelist);
-        rv_main_nlp.setAdapter(mainAdapter);
-        mainAdapter.setClickListener(this);
+        rv_main_nlp.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mainNLPAdapter = new MainAdapter(this, samplelist);
+        rv_main_nlp.setAdapter(mainNLPAdapter);
+        mainNLPAdapter.setClickListener(this);
+
+        List<String> audioList = new ArrayList<>();
+        audioList.add("Automatic Speech Recognition task");
+        audioList.add("Audio Classification task");
+
+        rv_main_audio.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mainAudioAdapter = new MainAdapter(this, audioList);
+        rv_main_audio.setAdapter(mainAudioAdapter);
+        mainAudioAdapter.setClickListener(this);
+
         Needle.onBackgroundThread().execute(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
                 .addFormDataPart("input", "The answer to the universe is [MASK].")
                 .build();
         Request request = new Request.Builder()
-                .url("https://api-inference.huggingface.co/models/bert-base-uncased")
+                .url("https://api-inference.huggingface.co/models/distilroberta-base")
                 .post(formBody)
                 .build();
 
@@ -80,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
 
     @Override
     public void onItemClick(View view, int position) {
-
+        Intent intent = new Intent(this, TextTaskActivity.class);
+        intent.putExtra("awd", mainNLPAdapter.getString(position));
+        startActivity(intent);
     }
 }

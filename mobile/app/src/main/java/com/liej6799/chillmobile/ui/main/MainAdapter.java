@@ -8,14 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.liej6799.chillmobile.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
+    private final Context mContext;
     private final List<String> mData;
     private final LayoutInflater mInflater;
     private MainItemClickListener mClickListener;
@@ -25,6 +29,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     MainAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.mContext = context;
     }
 
     @NonNull
@@ -38,6 +43,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String item = mData.get(position);
         holder.name.setText(item);
+
+        holder.cv_item_main.setCardBackgroundColor(ResourcesCompat.getColor(mContext.getResources(), R.color.gray, null));
+        holder.cv_item_main.setClickable(true);
+
+
+        if (Objects.equals(item, "Fill Mask Task"))
+        {
+            holder.cv_item_main.setCardBackgroundColor(ResourcesCompat.getColor(mContext.getResources(), R.color.purple_500, null));
+            holder.cv_item_main.setClickable(false);
+
+        }
     }
 
     @Override
@@ -47,9 +63,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
+        CardView cv_item_main;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_item_main);
+            cv_item_main = itemView.findViewById(R.id.cv_item_main);
+
             itemView.setOnClickListener(this);
         }
 
@@ -63,7 +82,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     void setClickListener(MainAdapter.MainItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
-
+    // convenience method for getting data at click position
+    String getString(int id) {
+        return mData.get(id);
+    }
     // parent activity will implement this method to respond to click events
     public interface MainItemClickListener {
         void onItemClick(View view, int position);
