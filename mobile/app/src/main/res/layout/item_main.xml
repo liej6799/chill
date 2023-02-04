@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         card_view:cardCornerRadius="20dp"
         android:layout_marginEnd="10dp"
-        card_view:cardBackgroundColor="@color/purple_500"
+        card_view:cardBackgroundColor="@color/teal"
         >
 
 

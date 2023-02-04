@@ -51,7 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         if (item.isActive())
         {
-            holder.cv_item_main.setCardBackgroundColor(ResourcesCompat.getColor(mContext.getResources(), R.color.purple_500, null));
+            holder.cv_item_main.setCardBackgroundColor(ResourcesCompat.getColor(mContext.getResources(), R.color.teal, null));
             holder.cv_item_main.setClickable(false);
 
         }

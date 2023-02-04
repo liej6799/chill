@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
     private MainAdapter mainNLPAdapter;
     private MainAdapter mainAudioAdapter;
 
-    OkHttpClient client = new OkHttpClient();
+
+
 
     @BindView(R.id.rv_main_nlp)
     RecyclerView rv_main_nlp;
@@ -62,35 +63,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainI
         rv_main_audio.setAdapter(mainAudioAdapter);
         mainAudioAdapter.setClickListener(this);
 
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    post();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // e.g. change one of the views
-            }
-        });
+
     }
 
-    void post() throws IOException {
-        RequestBody formBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("input", "The answer to the universe is [MASK].")
-                .build();
-        Request request = new Request.Builder()
-                .url("https://api-inference.huggingface.co/models/distilroberta-base")
-                .post(formBody)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-            System.out.println(response.body().string());
-        }
-    }
 
     @Override
     public void onItemClick(View view, int position) {
