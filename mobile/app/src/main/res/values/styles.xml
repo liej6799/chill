@@ -11,8 +11,12 @@
 
     </style>
 
-    <style name="style_text_subtitle" parent="style_text_black">
+    <style name="style_text_medium" parent="style_text_black">
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="style_text_medium_light" parent="style_text_medium">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="style_text_small" parent="style_text_black">

@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/tv_main_subtitle"
-        style="@style/style_text_subtitle"
+        style="@style/style_text_medium_light"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/tv_main_task_nlp"
-        style="@style/style_text_subtitle"
+        style="@style/style_text_medium_light"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -61,7 +61,7 @@
 
     <TextView
         android:id="@+id/tv_main_task_audio"
-        style="@style/style_text_subtitle"
+        style="@style/style_text_medium_light"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
